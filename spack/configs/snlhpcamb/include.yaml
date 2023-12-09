@@ -1,0 +1,86 @@
+compilers:
+- compiler:
+    spec: gcc@=8.5.0
+    paths:
+      cc: /usr/lib64/ccache/gcc
+      cxx: /usr/lib64/ccache/g++
+      f77: /usr/bin/gfortran
+      fc: /usr/bin/gfortran
+    flags: {}
+    operating_system: rhel8
+    target: x86_64
+    modules: []
+    environment: {}
+    extra_rpaths: []
+repos:
+- $spack/../repos/foam
+- $spack/../repos/exawind
+packages:
+  all:
+    permissions:
+      read: group
+      group: wg-sierra-users
+    compiler: [gcc]
+    providers:
+      mpi: [openmpi]
+      blas: [netlib-lapack]
+      lapack: [netlib-lapack]
+    variants: +mpi build_type=Release
+  boost:
+    version: [1.68.0, 1.76.0]
+    variants: cxxstd=14
+  cmake:
+    buildable: false
+    externals:
+    - spec: cmake@3.25.2
+      modules:
+      - cmake/3.25.2
+  openmpi:
+    buildable: false
+    externals:
+    - spec: openmpi@4.1.4
+      modules:
+      - openmpi-gnu/4.1  
+  slurm:
+    externals:
+    - spec: slurm@21.08.8-2
+      prefix: /usr
+    buildable: false
+  openssl:
+    version: [1.0.2]
+    buildable: false
+    externals:
+    - spec: openssl@1.0.2
+      prefix: /usr
+  ncurses:
+    version: [5.9]
+    buildable: false
+    externals:
+    - spec: ncurses@5.9
+      prefix: /usr
+  binutils:
+    version: [2.29.1]
+  zlib:
+    version: [1.2.7]
+    buildable: false
+    externals:
+    - spec: zlib@1.2.7
+      prefix: /usr
+  bzip2:
+    version: [1.0.6]
+    buildable: false
+    externals:
+    - spec: bzip2@1.0.6
+      prefix: /usr
+  m4:
+    version: [1.4.16]
+    buildable: false
+    externals:
+    - spec: m4@1.4.16
+      prefix: /usr
+config:
+  build_jobs: 48
+  source_cache: ~/.spack/downloads
+  misc_cache: $spack/../.cache
+  build_stage:
+  - $spack/../stage

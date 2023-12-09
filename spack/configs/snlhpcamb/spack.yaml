@@ -1,0 +1,17 @@
+spack:
+  include:
+  - include.yaml
+  view: true
+  specs:
+  - openfoam@2106_220610+metis
+  - waves2foam
+  - waveSolvers
+  concretizer:
+    unify: true
+  develop:
+    openfoam:
+      spec: openfoam@=2106_220610
+    waves2foam:
+      spec: waves2foam@=gitlatest
+    waveSolvers:
+      spec: waveSolvers@=main
